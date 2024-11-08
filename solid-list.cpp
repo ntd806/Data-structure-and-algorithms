@@ -112,6 +112,40 @@ int linearSearch (const SolidList solidList, const int x) {
 
     return -1;
 }
+// 1 phép hoán vị bằng 3 phép gán
+void swap(int &a, int &b){
+    int temp = a;
+    a = b;
+    b = temp;
+}
+// Độ phức tạp
+//Trường hợp tốt nhất: Khi mảng đã được sắp xếp, thuật toán vẫn thực hiện tất cả các phép so sánh, nên độ phức tạp vẫn là O(n2).
+//Trường hợp xấu nhất: Độ phức tạp vẫn là O(n2) khi mảng hoàn toàn ngẫu nhiên.
+// không phát hiện được danh sách đã có thứ tự
+void selectionSort (int a[], int n) {
+  for (int i = 0; i < n - 1; i++) {
+    int min_pos = i;  // Lưu vị trí của phần tử nhỏ nhất
+    for (int j = i + 1; j < n; j++) {
+        if (a[j] < a[min_pos]) {
+            min_pos = j;  // Cập nhật vị trí của phần tử nhỏ nhất
+        }
+    }
+    if (min_pos != i) {
+      swap(a[i], a[min_pos]);  // Hoán đổi a[i] với a[min_pos]
+    }
+}
+
+// selection sort
+void insertionSort(SolidList solidLis){
+    for (int i=1; i<solidLis.n; i++) {
+        int x = solidLis.a[i];
+    }
+}
+// insertion sort
+// bubble sort
+// Quick sort
+// heap sort
+// merge sort
 
 int main() {
     SolidList solidList;
