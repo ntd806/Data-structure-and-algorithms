@@ -138,7 +138,15 @@ void selectionSort (int a[], int n) {
 // selection sort
 void insertionSort(SolidList solidLis){
     for (int i=1; i<solidLis.n; i++) {
-        int x = solidLis.a[i];
+        int key = solidLis.a[i];
+        int pos = i-1;
+
+        while (pos >= 0 && a[pos] > key)
+        {
+            a[pos + 1] = a[pos];
+            pos--;
+        }
+        a[pos+1] = key;
     }
 }
 // insertion sort
