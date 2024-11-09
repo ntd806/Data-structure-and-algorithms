@@ -92,14 +92,15 @@ int binarySearch(const SolidList solidList, const int x) {
     while (left <= right) {
         int mid = left + (right - left) / 2; // Prevents potential overflow
 
-        if (solidList.a[mid] == x) {
-            return mid; // Element found, return index
-        } else if (solidList.a[mid] < x) {
-            left = mid + 1; // Search in the right half
+        if (solidList.a[mid] == x) return mid;
+
+        if (solidList.a[mid] < x) {
+            left = mid + 1;
         } else {
-            right = mid - 1; // Search in the left half
+            right = mid - 1;
         }
     }
+
     return -1; // Element not found
 }
 
