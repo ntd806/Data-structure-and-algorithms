@@ -5,6 +5,18 @@
         "__bit_reference": "cpp",
         "bitset": "cpp",
         "chrono": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "ios": "cpp",
+        "__mutex_base": "cpp",
+        "array": "cpp",
+        "istream": "cpp",
+        "optional": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "streambuf": "cpp",
+        "string_view": "cpp",
+        "tuple": "cpp",
+        "variant": "cpp",
+        "vector": "cpp"
     }
 }

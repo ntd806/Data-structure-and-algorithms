@@ -184,6 +184,24 @@ void bubbleSort(int a[], int n) {
 }
 
 // Quick sort
+void quickSort(int a[], int left, int right) {
+    int pivot = a[(left + right) / 2];
+    int l = left, r = right;
+    
+    do {
+        while (a[l] < pivot) l++;
+        while (a[r] > pivot) r--;
+        
+        if (l <= r) {
+            swap(a[l], a[r]);
+            l++;
+            r--;
+        }
+    } while (l <= r);
+
+    if (left < r) quickSort(a, left, r);
+    if (l < right) quickSort(a, l, right);
+}
 // heap sort
 // merge sort
 
