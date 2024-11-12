@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "iostream": "cpp",
-        "__node_handle": "cpp"
+        "__node_handle": "cpp",
+        "__bit_reference": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "unordered_map": "cpp"
     }
 }

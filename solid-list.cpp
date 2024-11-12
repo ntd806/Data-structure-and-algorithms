@@ -136,7 +136,7 @@ void selectionSort (int a[], int n) {
     }
 }
 
-// selection sort
+// insertion sort
 void insertionSort(SolidList solidLis){
     for (int i=1; i<solidLis.n; i++) {
         int key = solidLis.a[i];
@@ -150,8 +150,39 @@ void insertionSort(SolidList solidLis){
         a[pos+1] = key;
     }
 }
-// insertion sort
+
+// interchangeSort
+void interchangeSort(int a[], int n) {
+    for (int i = 0; i < n-1; i++)
+    {
+        for (int j = i+1; j < n; j--)
+        {
+            if (a[i] > a[j])
+            {
+               swap(a[i], a[j]);
+            }
+            
+        }
+        
+    }
+}
+
 // bubble sort
+void bubbleSort(int a[], int n) {
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = n-1; j > i; j--)
+        {
+            if (a[j] >  a[j-1])
+            {
+                swap(a[j], a[j-1]);
+            }
+            
+        }
+        
+    }
+}
+
 // Quick sort
 // heap sort
 // merge sort
