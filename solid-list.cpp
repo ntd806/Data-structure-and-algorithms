@@ -203,7 +203,6 @@ void quickSort(int a[], int left, int right) {
     if (l < right) quickSort(a, l, right);
 }
 // heap sort
-// merge sort
 
 int main() {
     SolidList solidList;
