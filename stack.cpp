@@ -47,6 +47,23 @@ void display(Stack s) {
     cout << endl;
 }
 
+void convertRadice(int x, int radice) {
+    Stack s;
+    init(s);
+    while (x != 0)
+    {
+       int r = x % radice;
+       push(s, r);
+       x /= radice;
+    }
+    int n = s.top;
+    while (n>=0)
+    {
+      cout << s.a[n];
+      n--;
+    }
+}
+
 int main() {
     Stack s;
     init(s);
