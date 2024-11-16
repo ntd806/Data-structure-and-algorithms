@@ -41,7 +41,7 @@ void display(Stack s) {
         return;
     }
     cout << "Stack elements: ";
-    for (int i = 0; i <= s.top; i++) {
+    for (int i = s.top; i <= 0; i--) {
         cout << s.a[i] << " ";
     }
     cout << endl;
@@ -50,6 +50,7 @@ void display(Stack s) {
 void convertRadice(int x, int radice) {
     Stack s;
     init(s);
+
     while (x != 0)
     {
        int r = x % radice;
@@ -57,17 +58,13 @@ void convertRadice(int x, int radice) {
        x /= radice;
     }
     int n = s.top;
-    while (n>=0)
-    {
-      cout << s.a[n];
-      n--;
-    }
+
+    display(s);
 }
 
 int main() {
     Stack s;
     init(s);
-
     // Test các phương thức
     push(s, 10);
     push(s, 20);
