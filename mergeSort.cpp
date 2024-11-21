@@ -62,6 +62,13 @@ int* mergeSort(int arr[], int size) {
     return sortedArray;
 }
 
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
 int main() {
     int arr[] = {38, 27, 43, 3, 9, 82, 10};
     int size = sizeof(arr) / sizeof(arr[0]);
@@ -69,10 +76,7 @@ int main() {
     int* sortedArray = mergeSort(arr, size);
 
     // In mảng đã sắp xếp
-    for (int i = 0; i < size; ++i) {
-        std::cout << sortedArray[i] << " ";
-    }
-    std::cout << std::endl;
+    printArray(sortedArray, size);
 
     // Giải phóng bộ nhớ của mảng đã sắp xếp
     delete[] sortedArray;
