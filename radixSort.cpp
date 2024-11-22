@@ -1,4 +1,10 @@
 #include <iostream>
+void show(int a[], int n){
+ for (int i = 0; i < n; i++) {
+        std::cout << a[i] << " ";  // In kết quả đã sắp xếp
+    }
+    std::cout << std::endl;
+}
 
 int maxNumber(int a[], int n) {
     int max = 0;  // Khởi tạo max là 0
@@ -43,28 +49,34 @@ int extractDigits(int number, int digit, int base) {
 int* radixSort(int a[], int n) {
     int maxVal = maxNumber(a, n);  // Lấy giá trị lớn nhất trong mảng
     int digitCount = countDigits(maxVal, 10);  // Tính số chữ số của giá trị lớn nhất trong cơ số 10
-    
+
     int* output = new int[n];  // Mảng phụ lưu trữ kết quả sau khi sắp xếp theo từng chữ số
 
     for (int digit = 0; digit < digitCount; digit++) {
-        int count[10] = {0};  // Mảng đếm số lần xuất hiện của từng chữ số (0 đến 9)
+        int count[10][2];  // Mảng 2 chiều lưu chữ số và số lượng xuất hiện của nó
+        
+        // Khởi tạo mảng count
+        for (int i = 0; i < 10; i++) {
+            count[i][0] = i;       // Lưu chữ số từ 0 đến 9
+            count[i][1] = 0;       // Khởi tạo số lượng xuất hiện bằng 0
+        }
 
         // Đếm số lượng xuất hiện của mỗi chữ số trong mảng
         for (int i = 0; i < n; i++) {
             int d = extractDigits(a[i], digit, 10);
-            count[d]++;
+            count[d][1]++;  // Tăng số lượng xuất hiện của chữ số d
         }
 
         // Cộng dồn để xác định vị trí cuối cùng của mỗi chữ số
         for (int i = 1; i < 10; i++) {
-            count[i] += count[i - 1];
+            count[i][1] += count[i - 1][1];
         }
 
         // Xây dựng mảng output theo thứ tự sắp xếp của chữ số hiện tại
         for (int i = n - 1; i >= 0; i--) {
             int d = extractDigits(a[i], digit, 10);
-            output[count[d] - 1] = a[i];
-            count[d]--;
+            output[count[d][1] - 1] = a[i];
+            count[d][1]--;  // Giảm số lượng vị trí của chữ số d
         }
 
         // Sao chép kết quả từ mảng output vào mảng a
@@ -84,10 +96,7 @@ int main() {
     
     radixSort(a, n);
 
-    for (int i = 0; i < n; i++) {
-        std::cout << a[i] << " ";  // In kết quả đã sắp xếp
-    }
-    std::cout << std::endl;
+    show(a,n);
 
     return 0;
 }
