@@ -14,12 +14,12 @@ void init(node* &root){
 }
 
 node* create(int x){
-    node* newNode = new node;
-    newNode->a = x;
-    newNode->left = NULL;
-    newNode->right = NULL;
+    node* newnode = new node;
+    newnode->a = x;
+    newnode->left = NULL;
+    newnode->right = NULL;
 
-    return newNode;
+    return newnode;
 }
 
 void lnr(node* root) {
@@ -49,11 +49,11 @@ void insert(node* &root, int x) {
     }
 
     // Create a new node and attach it to the parent
-    node* newNode = create(x);
+    node* newnode = create(x);
     if (parent->a > x) {
-        parent->left = newNode;
+        parent->left = newnode;
     } else {
-        parent->right = newNode;
+        parent->right = newnode;
     }
 }
 
@@ -69,11 +69,63 @@ node* search(node* root, int x) {
         } else if (p->a < x) {
             p = p->right; // Traverse right if current node's value is less than x
         } else {
-            return p; // Node found
+            return p; // node found
         }
     }
 
     return NULL; // Return NULL if the value is not found
+}
+
+void deletenode(node*& root, int x) {
+    if (root == NULL) return;
+
+    node* parent = NULL;
+    node* current = root;
+
+    // Tìm kiếm node cần xóa và lưu lại node cha
+    while (current != NULL && current->a != x) {
+        parent = current;
+        if (x < current->a)
+            current = current->left;
+        else
+            current = current->right;
+    }
+
+    // Nếu không tìm thấy node
+    if (current == NULL) return;
+
+    // Xử lý trường hợp node có 2 con
+    if (current->left != NULL && current->right != NULL) {
+        // Tìm node nhỏ nhất ở cây con bên phải (thay thế cho node bị xóa)
+        node* successorParent = current;
+        node* successor = current->right;
+
+        while (successor->left != NULL) {
+            successorParent = successor;
+            successor = successor->left;
+        }
+
+        // Gán giá trị của successor cho node hiện tại
+        current->a = successor->a;
+
+        // Tiếp tục xóa successor (là node không có hoặc chỉ có 1 con)
+        current = successor;
+        parent = successorParent;
+    }
+
+    // Xử lý trường hợp node có 0 hoặc 1 con
+    node* child = (current->left != NULL) ? current->left : current->right;
+
+    if (parent == NULL) {
+        // Trường hợp xóa node gốc
+        root = child;
+    } else if (parent->left == current) {
+        parent->left = child;
+    } else {
+        parent->right = child;
+    }
+
+    delete current;
 }
 
 // int main() {
