@@ -57,6 +57,25 @@ void insert(node* &root, int x) {
     }
 }
 
+node* search(node* root, int x) {
+    if (root == NULL) {
+        return NULL; // Return NULL if the tree is empty
+    }
+
+    node* p = root;
+    while (p != NULL) {
+        if (p->a > x) {
+            p = p->left; // Traverse left if current node's value is greater than x
+        } else if (p->a < x) {
+            p = p->right; // Traverse right if current node's value is less than x
+        } else {
+            return p; // Node found
+        }
+    }
+
+    return NULL; // Return NULL if the value is not found
+}
+
 // int main() {
 //     node* root;
 //     init(root);
@@ -86,5 +105,13 @@ int main() {
 
     cout << "In-order Traversal: ";
     lnr(root);
+
+    node* result = search(root, 15);
+    if (result != NULL) {
+        cout << "Value found: " << result->a << endl;
+    } else {
+        cout << "Value not found in the tree." << endl;
+    }
+
     return 0;
 }
