@@ -2,53 +2,97 @@
 #define MAX 1000
 using namespace std;
 
-struct node
-{
-    int a;
-    node* left;
-    node* right;
+// Definition of a tree node
+struct node {
+    int a;           // Value stored in the node
+    node* left;      // Pointer to the left child
+    node* right;     // Pointer to the right child
 };
 
-void init(node* &root){
-    root = NULL;
+// Initialize a binary search tree
+void init(node*& root) {
+    root = NULL; // Initially, the tree is empty
 }
 
-node* create(int x){
+// Stack structure for iterative traversal or other purposes
+struct Stack {
+    node* a[MAX]; // Array to store pointers to tree nodes
+    int top;      // Index of the top element in the stack
+};
+
+// Function to initialize the stack
+void initStack(Stack& s) {
+    s.top = -1; // Initially, the stack is empty
+}
+
+// Check if the stack is empty
+bool isEmpty(Stack s) {
+    return s.top < 0;
+}
+
+// Check if the stack is full
+bool isFull(Stack s) {
+    return s.top == MAX - 1;
+}
+
+// Push a node pointer onto the stack
+void push(Stack& s, node* x) {
+    if (isFull(s)) {
+        cout << "Stack overflow! Cannot push node." << endl;
+        return;
+    }
+    s.a[++s.top] = x; // Increment the top index and add the node
+}
+
+// Pop a node pointer from the stack
+node* pop(Stack& s) {
+    if (isEmpty(s)) {
+        cout << "Stack underflow! Cannot pop from an empty stack." << endl;
+        return NULL;
+    }
+    return s.a[s.top--]; // Return the top element and decrement the index
+}
+
+// Create a new node with a given value
+node* create(int x) {
     node* newnode = new node;
-    newnode->a = x;
+    newnode->a = x; // Set the value
     newnode->left = NULL;
     newnode->right = NULL;
-
     return newnode;
 }
 
+// Perform in-order traversal (LNR: Left-Node-Right)
 void lnr(node* root) {
     if (root == NULL) return;
-    lnr(root->left);
-    cout << root->a << " ";
-    lnr(root->right);
+    lnr(root->left);             // Visit left subtree
+    cout << root->a << " ";      // Print the value
+    lnr(root->right);            // Visit right subtree
 }
 
-void insert(node* &root, int x) {
+// Insert a value into the binary search tree
+void insert(node*& root, int x) {
     if (root == NULL) {
-        root = create(x);
+        root = create(x); // Create a new root if the tree is empty
         return;
     }
 
-    node* p = root;
-    node* parent = NULL;
+    node* p = root;     // Start from the root
+    node* parent = NULL; // Keep track of the parent node
     while (p != NULL) {
-        parent = p; // Update parent before moving
+        parent = p;
         if (p->a > x) {
-            p = p->left;
+            p = p->left; // Move to the left subtree
         } else if (p->a < x) {
-            p = p->right;
+            p = p->right; // Move to the right subtree
         } else {
-            return; // Duplicate values are not allowed in BST
+            // Handle duplicate values
+            cout << "Duplicate value " << x << " not allowed in BST." << endl;
+            return;
         }
     }
 
-    // Create a new node and attach it to the parent
+    // Attach the new node to the appropriate parent
     node* newnode = create(x);
     if (parent->a > x) {
         parent->left = newnode;
@@ -57,46 +101,43 @@ void insert(node* &root, int x) {
     }
 }
 
+// Search for a value in the binary search tree
 node* search(node* root, int x) {
-    if (root == NULL) {
-        return NULL; // Return NULL if the tree is empty
-    }
-
-    node* p = root;
+    node* p = root; // Start from the root
     while (p != NULL) {
         if (p->a > x) {
-            p = p->left; // Traverse left if current node's value is greater than x
+            p = p->left; // Move to the left subtree
         } else if (p->a < x) {
-            p = p->right; // Traverse right if current node's value is less than x
+            p = p->right; // Move to the right subtree
         } else {
-            return p; // node found
+            return p; // Node found
         }
     }
-
-    return NULL; // Return NULL if the value is not found
+    return NULL; // Node not found
 }
 
+// Delete a node with the given value
 void deletenode(node*& root, int x) {
     if (root == NULL) return;
 
     node* parent = NULL;
     node* current = root;
 
-    // Tìm kiếm node cần xóa và lưu lại node cha
+    // Search for the node to delete
     while (current != NULL && current->a != x) {
         parent = current;
-        if (x < current->a)
+        if (x < current->a) {
             current = current->left;
-        else
+        } else {
             current = current->right;
+        }
     }
 
-    // Nếu không tìm thấy node
-    if (current == NULL) return;
+    if (current == NULL) return; // Node not found
 
-    // Xử lý trường hợp node có 2 con
+    // Handle the case where the node has two children
     if (current->left != NULL && current->right != NULL) {
-        // Tìm node nhỏ nhất ở cây con bên phải (thay thế cho node bị xóa)
+        // Find the inorder successor (smallest node in the right subtree)
         node* successorParent = current;
         node* successor = current->right;
 
@@ -105,19 +146,19 @@ void deletenode(node*& root, int x) {
             successor = successor->left;
         }
 
-        // Gán giá trị của successor cho node hiện tại
+        // Replace the current node's value with the successor's value
         current->a = successor->a;
 
-        // Tiếp tục xóa successor (là node không có hoặc chỉ có 1 con)
+        // Delete the successor node
         current = successor;
         parent = successorParent;
     }
 
-    // Xử lý trường hợp node có 0 hoặc 1 con
+    // Handle the case where the node has one or no children
     node* child = (current->left != NULL) ? current->left : current->right;
 
     if (parent == NULL) {
-        // Trường hợp xóa node gốc
+        // If deleting the root
         root = child;
     } else if (parent->left == current) {
         parent->left = child;
@@ -125,30 +166,15 @@ void deletenode(node*& root, int x) {
         parent->right = child;
     }
 
-    delete current;
+    delete current; // Free the memory
 }
 
-// int main() {
-//     node* root;
-//     init(root);
-
-//     insert(root, 50);
-//     insert(root, 30);
-//     insert(root, 70);
-//     insert(root, 20);
-//     insert(root, 40);
-//     insert(root, 60);
-//     insert(root, 80);
-
-//     cout << "In-order Traversal: ";
-//     lnr(root);
-//     return 0;
-// }
-
+// Main function for testing
 int main() {
     node* root;
-    init(root);
+    init(root); // Initialize the tree
 
+    // Insert nodes into the tree
     insert(root, 25);
     insert(root, 15);
     insert(root, 35);
@@ -157,7 +183,9 @@ int main() {
 
     cout << "In-order Traversal: ";
     lnr(root);
+    cout << endl;
 
+    // Search for a node
     node* result = search(root, 15);
     if (result != NULL) {
         cout << "Value found: " << result->a << endl;

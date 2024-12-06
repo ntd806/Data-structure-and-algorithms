@@ -1,81 +1,113 @@
 #include <iostream>
-#include "stack.h" // Bao gồm tệp tiêu đề chứa định nghĩa cấu trúc Stack và các hàm liên quan
+#define MAX 1000
 using namespace std;
 
-// Hàm khởi tạo stack
-void init(Stack &s) {
-    s.top = -1; // Ban đầu, stack rỗng với chỉ số đỉnh là -1
+// Stack structure
+struct Stack {
+    int a[MAX];  // Array to hold stack elements
+    int top;     // Index of the top element
+};
+
+// Function to initialize the stack
+void init(Stack& s) {
+    s.top = -1; // Initially, the stack is empty
 }
 
-// Kiểm tra xem stack có rỗng không
+// Check if the stack is empty
 bool isEmpty(Stack s) {
-    return s.top < 0; // Nếu chỉ số đỉnh nhỏ hơn 0, stack rỗng
+    return s.top < 0; // Stack is empty when top < 0
 }
 
-// Kiểm tra xem stack có đầy không
+// Check if the stack is full
 bool isFull(Stack s) {
-    return s.top == MAX - 1; // Stack đầy khi chỉ số đỉnh đạt MAX-1
+    return s.top == MAX - 1; // Stack is full when top equals MAX-1
 }
 
-// Thêm một phần tử vào stack
-void push(Stack &s, int x) {
-    if (isFull(s)) { // Nếu stack đầy, không thể thêm phần tử
+// Push an element onto the stack
+void push(Stack& s, int x) {
+    if (isFull(s)) {
         cout << "Stack overflow! Cannot push " << x << endl;
         return;
     }
-    s.a[++s.top] = x; // Tăng chỉ số đỉnh và thêm phần tử
+    s.a[++s.top] = x; // Increment top and add the element
 }
 
-// Loại bỏ và trả về phần tử ở đỉnh stack
-int pop(Stack &s) {
-    if (isEmpty(s)) { // Nếu stack rỗng, không thể loại bỏ phần tử
+// Pop an element from the stack and return it
+int pop(Stack& s) {
+    if (isEmpty(s)) {
         cout << "Stack underflow! Cannot pop from an empty stack." << endl;
-        return -1; // Giá trị đặc biệt để báo lỗi
+        return -1; // Return a sentinel value to indicate failure
     }
-    return s.a[s.top--]; // Trả về phần tử đỉnh và giảm chỉ số đỉnh
+    return s.a[s.top--]; // Return the top element and decrement the index
 }
 
-// Hiển thị các phần tử trong stack
+// Display all elements in the stack
 void display(Stack s) {
-    if (isEmpty(s)) { // Nếu stack rỗng, không có gì để hiển thị
+    if (isEmpty(s)) {
         cout << "Stack is empty!" << endl;
         return;
     }
     cout << "Stack elements: ";
-    for (int i = s.top; i >= 0; i--) { // Lặp qua các phần tử từ đỉnh đến đáy
+    for (int i = s.top; i >= 0; i--) { // Traverse from top to bottom
         cout << s.a[i] << " ";
     }
     cout << endl;
 }
 
-// Chuyển đổi một số từ hệ thập phân sang hệ cơ số khác
+// Convert a decimal number to another base and display the result
 void convertRadice(int x, int radice) {
-    Stack s;
-    init(s); // Khởi tạo stack mới để lưu các phần dư
-
-    // Tính phần dư và thêm vào stack
-    while (x != 0) {
-        int r = x % radice; // Tính phần dư
-        push(s, r); // Lưu phần dư vào stack
-        x /= radice; // Chia số cho cơ số
+    if (radice < 2 || radice > 36) {
+        cout << "Invalid base! Please choose a base between 2 and 36." << endl;
+        return;
     }
 
-    // Hiển thị các phần dư từ stack (theo thứ tự ngược lại để tạo thành số mới)
-    display(s);
+    Stack s;
+    init(s); // Initialize a new stack for the conversion
+
+    // Compute the remainders and push them onto the stack
+    while (x != 0) {
+        int r = x % radice; // Compute the remainder
+        push(s, r); // Push the remainder onto the stack
+        x /= radice; // Divide the number by the base
+    }
+
+    // Display the result in reverse order (from top of the stack)
+    cout << "Number in base " << radice << ": ";
+    while (!isEmpty(s)) {
+        int digit = pop(s);
+        // Handle digits greater than 9 (e.g., A, B, C for hexadecimal)
+        if (digit >= 10) {
+            cout << char('A' + (digit - 10)); // Convert to character representation
+        } else {
+            cout << digit;
+        }
+    }
+    cout << endl;
 }
 
-// int main() {
-//     Stack s;
-//     init(s);
-//     // Test các phương thức cơ bản của stack
-//     push(s, 10);
-//     push(s, 20);
-//     push(s, 30);
-//     display(s);
+int main() {
+    Stack s;
+    init(s);
 
-//     cout << "Popped element: " << pop(s) << endl;
-//     display(s);
+    // Test basic stack operations
+    cout << "Pushing elements onto the stack..." << endl;
+    push(s, 10);
+    push(s, 20);
+    push(s, 30);
+    display(s);
 
-//     // Kết thúc chương trình
-//     return 0;
-// }
+    cout << "Popping element: " << pop(s) << endl;
+    display(s);
+
+    // Test the conversion function
+    cout << "\nDecimal to Binary conversion of 25:" << endl;
+    convertRadice(25, 2); // Convert 25 to binary
+
+    cout << "\nDecimal to Hexadecimal conversion of 255:" << endl;
+    convertRadice(255, 16); // Convert 255 to hexadecimal
+
+    cout << "\nDecimal to Base-3 conversion of 45:" << endl;
+    convertRadice(45, 3); // Convert 45 to base-3
+
+    return 0;
+}
