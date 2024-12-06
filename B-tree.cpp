@@ -14,45 +14,6 @@ void init(node*& root) {
     root = NULL; // Initially, the tree is empty
 }
 
-// Stack structure for iterative traversal or other purposes
-struct Stack {
-    node* a[MAX]; // Array to store pointers to tree nodes
-    int top;      // Index of the top element in the stack
-};
-
-// Function to initialize the stack
-void initStack(Stack& s) {
-    s.top = -1; // Initially, the stack is empty
-}
-
-// Check if the stack is empty
-bool isEmpty(Stack s) {
-    return s.top < 0;
-}
-
-// Check if the stack is full
-bool isFull(Stack s) {
-    return s.top == MAX - 1;
-}
-
-// Push a node pointer onto the stack
-void push(Stack& s, node* x) {
-    if (isFull(s)) {
-        cout << "Stack overflow! Cannot push node." << endl;
-        return;
-    }
-    s.a[++s.top] = x; // Increment the top index and add the node
-}
-
-// Pop a node pointer from the stack
-node* pop(Stack& s) {
-    if (isEmpty(s)) {
-        cout << "Stack underflow! Cannot pop from an empty stack." << endl;
-        return NULL;
-    }
-    return s.a[s.top--]; // Return the top element and decrement the index
-}
-
 // Create a new node with a given value
 node* create(int x) {
     node* newnode = new node;
@@ -167,6 +128,71 @@ void deletenode(node*& root, int x) {
     }
 
     delete current; // Free the memory
+}
+
+// Stack structure for iterative traversal or other purposes
+struct Stack {
+    node* a[MAX]; // Array to store pointers to tree nodes
+    int top;      // Index of the top element in the stack
+};
+
+// Function to initialize the stack
+void initStack(Stack& s) {
+    s.top = -1; // Initially, the stack is empty
+}
+
+// Check if the stack is empty
+bool isEmpty(Stack s) {
+    return s.top < 0;
+}
+
+// Check if the stack is full
+bool isFull(Stack s) {
+    return s.top == MAX - 1;
+}
+
+// Push a node pointer onto the stack
+void push(Stack& s, node* x) {
+    if (isFull(s)) {
+        cout << "Stack overflow! Cannot push node." << endl;
+        return;
+    }
+    s.a[++s.top] = x; // Increment the top index and add the node
+}
+
+// Pop a node pointer from the stack
+node* pop(Stack& s) {
+    if (isEmpty(s)) {
+        cout << "Stack underflow! Cannot pop from an empty stack." << endl;
+        return NULL;
+    }
+    return s.a[s.top--]; // Return the top element and decrement the index
+}
+
+// Function to perform in-order traversal (LNR) of a binary tree using a stack
+void lnrStack(node* head, Stack &s) {
+    // Start traversal from the root of the tree
+    node* current = head;
+
+    // Continue until all nodes are processed (current is NULL and stack is empty)
+    while (current != NULL || !isEmpty(s)) {
+        // Traverse the left subtree
+        while (current != NULL) {
+            // Push the current node onto the stack
+            push(s, current);
+            // Move to the left child
+            current = current->left;
+        }
+
+        // Pop the top node from the stack (backtrack to the most recent unprocessed node)
+        current = pop(s);
+
+        // Process the node (e.g., print its value)
+        cout << current->a << " ";
+
+        // Move to the right subtree of the current node
+        current = current->right;
+    }
 }
 
 // Main function for testing
