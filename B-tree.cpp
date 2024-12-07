@@ -195,6 +195,71 @@ void lnrStack(node* head, Stack &s) {
     }
 }
 
+// Function to count different types of nodes in a binary tree
+void counter(node* root, int &n1, int &n2, int &n3) {
+    // Base case: if the node is NULL, return
+    if (root == NULL) {
+        return;
+    }
+
+    // Recursive call to the left subtree
+    counter(root->left, n1, n2, n3);
+
+    // Check the type of node
+    if (root->left == NULL && root->right == NULL) {
+        // Leaf node: no children
+        n1++;
+    } else if (root->left != NULL || root->right != NULL) {
+        // Internal node: at least one child
+        n2++;
+    } else {
+        // This branch is redundant as it won't be reached. 
+        // There are no nodes that are neither leaf nor internal.
+        n3++;
+    }
+
+    // Recursive call to the right subtree
+    counter(root->right, n1, n2, n3);
+}
+
+// Function to calculate the height of a binary tree
+int calHeight(node* root) {
+    // Base case: if the node is NULL, height is 0
+    if (root != NULL) {
+        // Recursive call to calculate height of left and right subtrees
+        int left = calHeight(root->left) + 1;
+        int right = calHeight(root->right) + 1;
+
+        // Return the maximum of left and right subtree heights
+        return left > right ? left : right;
+    }
+
+    return 0;
+}
+
+// Function to print all nodes at a specific depth `expected` in a binary tree
+void showK(node* root, int k, int expected) {
+    // Base case: if the node is NULL, return
+    if (root == NULL) {
+        return;
+    }
+
+    // Increment the current depth
+    k++;
+
+    // Traverse the left subtree
+    showK(root->left, k, expected);
+
+    // Check if the current depth matches the expected depth
+    if (k == expected) {
+        // Print the node's value if it is at the expected depth
+        cout << root->a << " ";
+    }
+
+    // Traverse the right subtree
+    showK(root->right, k, expected);
+}
+
 // Main function for testing
 int main() {
     node* root;
