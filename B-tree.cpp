@@ -238,7 +238,7 @@ int calHeight(node* root) {
 }
 
 // Function to print all nodes at a specific depth `expected` in a binary tree
-void showK(node* root, int k, int expected) {
+void showK(node* root, int k, int depth) {
     // Base case: if the node is NULL, return
     if (root == NULL) {
         return;
@@ -248,16 +248,16 @@ void showK(node* root, int k, int expected) {
     k++;
 
     // Traverse the left subtree
-    showK(root->left, k, expected);
+    showK(root->left, k, depth);
 
     // Check if the current depth matches the expected depth
-    if (k == expected) {
+    if (k == depth) {
         // Print the node's value if it is at the expected depth
         cout << root->a << " ";
     }
 
     // Traverse the right subtree
-    showK(root->right, k, expected);
+    showK(root->right, k, depth);
 }
 
 // Main function for testing
