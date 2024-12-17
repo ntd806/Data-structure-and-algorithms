@@ -159,7 +159,7 @@ void interchangeSort(int a[], int n) {
     }
 }
 
-// Thuật toán Insertion Sort (sắp xếp chèn) là một thuật toán sắp xếp đơn giản, hoạt động giống như cách bạn sắp xếp bài khi chơi bài tây. Dưới đây là cách hoạt động của nó:
+//Thuật toán Insertion Sort (sắp xếp chèn) là một thuật toán sắp xếp đơn giản, hoạt động giống như cách bạn sắp xếp bài khi chơi bài tây. Dưới đây là cách hoạt động của nó:
 //     Bắt đầu từ phần tử thứ hai trong danh sách (vì phần tử đầu tiên được coi là đã được sắp xếp).
 //     So sánh phần tử hiện tại với các phần tử đứng trước nó trong danh sách đã sắp xếp.
 //     Chèn phần tử hiện tại vào vị trí thích hợp trong danh sách đã sắp xếp, sao cho danh sách vẫn duy trì thứ tự tăng dần (hoặc giảm dần nếu sắp xếp ngược).
