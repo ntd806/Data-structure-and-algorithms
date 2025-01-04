@@ -78,6 +78,7 @@ node* search(node* root, int x) {
 }
 
 // Delete a node with the given value
+// V1
 void deletenode(node*& root, int x) {
     if (root == NULL) return;
 
@@ -128,6 +129,56 @@ void deletenode(node*& root, int x) {
     }
 
     delete current; // Free the memory
+}
+
+// V2
+void deleteNode(node* &root, int x) {
+    if (root == nullptr) return;  // Cây rỗng, không có gì để xóa
+
+    if (x < root->a) {
+        // Nếu x nhỏ hơn giá trị của root, tìm và xóa ở cây con bên trái
+        deleteNode(root->left, x);
+    } 
+    else if (x > root->a) {
+        // Nếu x lớn hơn giá trị của root, tìm và xóa ở cây con bên phải
+        deleteNode(root->right, x);
+    } 
+    else {
+        // Trường hợp: x == root->x, tìm thấy nút cần xóa
+
+        // Nếu nút không có con (là lá)
+        if (root->left == nullptr && root->right == nullptr) {
+            delete root;  // Xóa nút này
+            root = nullptr;  // Đặt lại con trỏ root thành nullptr (do đã xóa)
+        } 
+        // Nếu nút chỉ có một con phải
+        else if (root->left == nullptr) {
+            node* temp = root;
+            root = root->right;  // Gán root cho con phải của nó
+            delete temp;  // Xóa nút gốc (bây giờ là con phải)
+        } 
+        // Nếu nút chỉ có một con trái
+        else if (root->right == nullptr) {
+            node* temp = root;
+            root = root->left;  // Gán root cho con trái của nó
+            delete temp;  // Xóa nút gốc (bây giờ là con trái)
+        } 
+        // Nếu nút có hai con
+        else {
+            // Tìm giá trị nhỏ nhất trong cây con bên phải
+            node* minNode = findMin(root->right);
+            root->a = minNode->a;  // Sao chép giá trị nhỏ nhất vào root
+            deleteNode(root->right, minNode->a);  // Xóa nút thay thế trong cây con bên phải
+        }
+    }
+}
+
+// Hàm tìm nút có giá trị nhỏ nhất trong cây con bên phải
+node* findMin(node* root) {
+    while (root->left != nullptr) {
+        root = root->left;
+    }
+    return root;  // Trả về nút có giá trị nhỏ nhất
 }
 
 // Stack structure for iterative traversal or other purposes
