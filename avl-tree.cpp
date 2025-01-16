@@ -220,7 +220,7 @@ void insert(Node* &root, Stack* &stack, int x) {
 void LNR(Node* node) {
     if (node != NULL) {
         LNR(node->left);
-        cout << node->data << " ";
+        cout << "(Node: " << node->data << ", height: " << node->height << "), ";
         LNR(node->right);
     }
 }
