@@ -146,10 +146,10 @@ void rightLeftRotate(Node* &k3) {
 }
 
 // Trường hợp	Điều kiện Balance Factor của nút k	Điều kiện của cây con
-// LL	Balance Factor(k) > 1	| Balance Factor(k->left) >= 0
-// RR	Balance Factor(k) < -1	| Balance Factor(k->right) <= 0
-// LR	Balance Factor(k) > 1	| Balance Factor(k->left) < 0
-// RL	Balance Factor(k) < -1	| Balance Factor(k->right) > 0
+// LL	Balance Factor(k) > 1	&& Balance Factor(k->left) >= 0
+// RR	Balance Factor(k) < -1	&& Balance Factor(k->right) <= 0
+// LR	Balance Factor(k) > 1	&& Balance Factor(k->left) < 0
+// RL	Balance Factor(k) < -1	&& Balance Factor(k->right) > 0
 
 void insert(Node* &root, Stack* &stack, int x) {
     if (root == NULL) {
