@@ -3,7 +3,7 @@ Data Structures is about how data can be stored in different structures.  Algori
 
 # Environments
 This project for education puposes and open sources
-All code is ran online environments at: https://www.onlinegdb.com/
+All code is ran online at: https://www.onlinegdb.com/
 
 Author: Anthony Nguyen Developer
 Facebook: https://www.facebook.com/anthony.nguyen200090/
