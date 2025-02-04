@@ -159,38 +159,46 @@ void interchangeSort(int a[], int n) {
     }
 }
 
-//Thuật toán Insertion Sort (sắp xếp chèn) là một thuật toán sắp xếp đơn giản, hoạt động giống như cách bạn sắp xếp bài khi chơi bài tây. Dưới đây là cách hoạt động của nó:
-//     Bắt đầu từ phần tử thứ hai trong danh sách (vì phần tử đầu tiên được coi là đã được sắp xếp).
-//     So sánh phần tử hiện tại với các phần tử đứng trước nó trong danh sách đã sắp xếp.
-//     Chèn phần tử hiện tại vào vị trí thích hợp trong danh sách đã sắp xếp, sao cho danh sách vẫn duy trì thứ tự tăng dần (hoặc giảm dần nếu sắp xếp ngược).
-//     Lặp lại quá trình này cho tất cả các phần tử trong danh sách.
-// Ví dụ minh họa:
-// Giả sử bạn có danh sách: [7, 3, 5, 2]
-//     Bước 1: Phần tử đầu tiên 7 được coi là đã sắp xếp.
-//     Bước 2: Xét phần tử thứ hai 3. So sánh 3 với 7 và chèn 3 trước 7. Danh sách: [3, 7, 5, 2].
-//     Bước 3: Xét phần tử thứ ba 5. So sánh 5 với 7, rồi với 3. Chèn 5 vào giữa. Danh sách: [3, 5, 7, 2].
-//     Bước 4: Xét phần tử thứ tư 2. So sánh 2 với 7, 5, và 3, rồi chèn 2 vào đầu. Danh sách: [2, 3, 5, 7].
-// Đặc điểm:
-//     Độ phức tạp thời gian:
-//         Trường hợp tốt nhất (danh sách đã sắp xếp): O(n).
-//         Trường hợp xấu nhất (danh sách ngược): O(n²).
-//     Độ phức tạp không gian: O(1) (thuật toán tại chỗ, không dùng thêm bộ nhớ phụ).
-//     Ứng dụng: Hiệu quả với danh sách nhỏ hoặc danh sách gần như đã sắp xếp.
+// Giải thích chi tiết các bước thực hiện:
+// Bắt đầu từ phần tử thứ hai:
+// Phần tử đầu tiên (a[0]) được coi là đã sắp xếp. Vì vậy, thuật toán bắt đầu với phần tử thứ hai (ở vị trí i = 1) và thực hiện chèn các phần tử từ a[1] đến a[n-1].
+// Lưu giá trị cần chèn:
+// Giá trị của phần tử tại chỉ số i (phần tử cần chèn) được lưu vào biến x.
+// So sánh và dịch chuyển các phần tử lớn hơn x:
+// Ta dùng biến j để di chuyển ngược về phía trước trong đoạn con đã sắp xếp (a[0] đến a[i-1]). Nếu a[j] > x, ta dịch chuyển a[j] sang phải (vị trí a[j+1]), tạo không gian cho x.
+// Chèn phần tử vào vị trí đúng:
+// Khi ta không còn tìm thấy phần tử nào lớn hơn x, hoặc đã di chuyển hết qua các phần tử đã sắp xếp, ta sẽ chèn x vào vị trí thích hợp tại a[j+1].
+// Tiếp tục với phần tử tiếp theo:
+// Thuật toán tiếp tục lặp lại các bước trên cho tất cả các phần tử còn lại trong mảng.
+// Thời gian và không gian:
+// Thời gian: Trong trường hợp tốt nhất (mảng đã sắp xếp), độ phức tạp là O(n). Trong trường hợp xấu nhất (mảng ngược), độ phức tạp là O(n²).
+// Không gian: Độ phức tạp không gian là O(1) vì thuật toán thực hiện tại chỗ và không sử dụng bộ nhớ phụ.
 void insertSort(int a[], int n) {
-    // Duyệt qua từng phần tử của mảng, bắt đầu từ vị trí thứ 1
-    // Giả sử đoạn con từ vị trí 0 đã được sắp xếp
-    for (int i = 1; i < n; i++) { 
-        // Lấy giá trị của phần tử tại vị trí i để chuẩn bị chèn vào đoạn con đã sắp xếp
+    // Bắt đầu từ phần tử thứ hai trong mảng (vì phần tử đầu tiên a[0] đã được coi là đã sắp xếp)
+    for (int i = 1; i < n; i++) {
+        // Lưu giá trị của phần tử tại vị trí i vào biến x
+        // Đây là phần tử cần được chèn vào đoạn con đã sắp xếp (a[0], ..., a[i-1])
         int x = a[i]; 
-        // j là vị trí của phần tử cuối cùng trong đoạn con đã sắp xếp
+        
+        // j là chỉ số của phần tử cuối cùng trong đoạn con đã sắp xếp
+        // ban đầu j = i - 1, tức là vị trí của phần tử liền kề với phần tử cần chèn
         int j = i - 1;
-        // Dịch chuyển các phần tử lớn hơn x trong đoạn con đã sắp xếp về phía sau
-        while (j >= 0 && a[j] > x) { 
-            a[j + 1] = a[j];
-            j--;
+        
+        // Tiến hành so sánh x với các phần tử trong đoạn con đã sắp xếp (từ a[j] đến a[0])
+        // Nếu a[j] > x, dịch chuyển a[j] sang phải một vị trí để tạo chỗ cho x
+        while (j >= 0 && a[j] > x) {
+            // Dịch chuyển phần tử a[j] sang a[j + 1]
+            // Điều này tạo ra một chỗ trống tại vị trí j để chèn x vào
+            a[j + 1] = a[j];  
+            
+            // Tiếp tục kiểm tra phần tử kế tiếp trong đoạn con đã sắp xếp (giảm j)
+            j--;  
         }
-        // Chèn x vào đúng vị trí trong đoạn con đã sắp xếp
-        a[j + 1] = x; 
+        
+        // Sau khi dịch chuyển các phần tử lớn hơn x, chèn x vào vị trí j + 1
+        // Tại thời điểm này, j là vị trí của phần tử lớn nhất nhỏ hơn x hoặc j = -1
+        // Nên phần tử x sẽ được chèn vào vị trí j + 1
+        a[j + 1] = x;
     }
 }
 

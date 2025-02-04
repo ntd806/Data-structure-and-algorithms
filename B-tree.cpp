@@ -61,8 +61,13 @@ BTree* pop(Stack* &s) {
     return s->a[s->top--];
 }
 
-void insert(BTree* &root, int x, Stack* &s ) {
-    if (root == NULL ) return;
+void insertKey(BTree* &root, int x, Stack* &s, int order) {
+    if (root == NULL ) {
+        root->keys[0] = x;
+        root->n = 1;
+
+        return;
+    }
 }
 
 int main() {
