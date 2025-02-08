@@ -9,8 +9,8 @@ struct graph {
 
 // Initialize graph
 void initGraph(graph &g) {
-    for (int i = 0; i < g.vertex; i++) {  // Change from 1 to 0-based index
-        for (int j = 0; j < g.vertex; j++) {  // Change from 1 to 0-based index
+    for (int i = 1; i <= g.vertex; i++) {  // Change from 1 to 0-based index
+        for (int j = 1; j <= g.vertex; j++) {  // Change from 1 to 0-based index
             g.matrix[i][j] = 0;
         }
     }
@@ -29,8 +29,8 @@ void addEdge(graph &g, int u, int v) {
 
 // Print the graph's adjacency matrix
 void printGraph(graph g) {
-    for (int i = 0; i < g.vertex; i++) {  // Change from 1 to 0-based index
-        for (int j = 0; j < g.vertex; j++) {  // Change from 1 to 0-based index
+    for (int i = 1; i <= g.vertex; i++) {  // Change from 1 to 0-based index
+        for (int j = 1; j <= g.vertex; j++) {  // Change from 1 to 0-based index
             cout << g.matrix[i][j] << " ";
         }
         cout << endl;
@@ -47,7 +47,7 @@ void createGraph(graph &g) {
 // Calculate the degree of a vertex u
 int degree(graph g, int u) {
     int deg = 0;
-    for (int i = 0; i < g.vertex; i++) {  // Change from 1 to 0-based index
+    for (int i = 1; i <= g.vertex; i++) {  // Change from 1 to 0-based index
         if (g.matrix[u][i] == 1) {
             deg++;
         }
