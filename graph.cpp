@@ -37,8 +37,8 @@ int popList(List &l) {
 }
 
 void initGraph(Graph &g) {
-    for (int i = 0; i <= g.vertex; i++) {  // Change to 0-based index
-        for (int j = 0; j <= g.vertex; j++) {  // Change to 0-based index
+    for (int i = 1; i <= g.vertex; i++) {  // Change to 0-based index
+        for (int j = 1; j <= g.vertex; j++) {  // Change to 0-based index
             g.matrix[i][j] = 0;
         }
     }
@@ -54,8 +54,8 @@ void addEdge(Graph &g, int u, int v) {
 }
 
 void printGraph(Graph g) {
-    for (int i = 0; i < g.vertex; i++) {  // Change to 0-based index
-        for (int j = 0; j < g.vertex; j++) {  // Change to 0-based index
+    for (int i = 1; i <= g.vertex; i++) {  // Change to 0-based index
+        for (int j = 1; j <= g.vertex; j++) {  // Change to 0-based index
             cout << g.matrix[i][j] << " ";
         }
         cout << endl;
@@ -70,7 +70,7 @@ void createGraph(Graph &g) {
 
 int degree(Graph g, int u) {
     int deg = 0;
-    for (int i = 0; i < g.vertex; i++) {  // Change to 0-based index
+    for (int i = 1; i <= g.vertex; i++) {  // Change to 0-based index
         if (g.matrix[u][i] == 1) {
             deg++;
         }
@@ -93,7 +93,7 @@ void readGraphFromString(const string &graphData, Graph &g) {
 List neighbors(Graph g, int u) {
     List l;
     initList(l);
-    for (int i = 0; i < g.vertex; i++) {  // Change to 0-based index
+    for (int i = 1; i <= g.vertex; i++) {  // Change to 0-based index
         if (g.matrix[u][i] == 1) {
             addList(l, i);
         }
