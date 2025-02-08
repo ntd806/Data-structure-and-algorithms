@@ -8,8 +8,8 @@ struct graph {
 };
 
 void initGraph(graph &g) {
-    for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 6; j++) {
+    for (int i = 1; i <= g.vertex; i++) {
+        for (int j = 1; j <= g.vertex; j++) {
             g.matrix[i][j] = 0;
         }
     }
@@ -25,8 +25,8 @@ void addEdge(graph &g, int u, int v) {
 }
 
 void printGraph(graph g) {
-    for (int i = 0; i < g.vertex; i++) {
-        for (int j = 0; j < g.vertex; j++) {
+    for (int i = 1; i <= g.vertex; i++) {
+        for (int j = 1; j <= g.vertex; j++) {
             cout << g.matrix[i][j] << " ";
         }
         cout << endl;
@@ -37,6 +37,16 @@ void createGraph(graph &g) {
     cout << "enter vertex" << endl;
     cin >> g.vertex;
     initGraph(g);
+}
+
+int degree (graph g, int u) {
+    int deg = 0;
+    for (int i = 1; i <= g.vertex; i++) {
+        if (g.matrix[u][i] == 1) {
+            deg++;
+        }
+    }
+    return deg;
 }
 
 int main() {
