@@ -3,6 +3,59 @@
 #include <string>
 #define MAX 20
 using namespace std;
+struct Queue
+{
+    int data[MAX];
+    int head;
+    int tail;
+};
+
+void initQueue(Queue &q)
+{
+    q.head = -1;
+    q.tail = -1;
+}
+
+bool isEmpty(Queue q)
+{
+    return q.head == -1;
+}
+
+bool isFull(Queue q)
+{
+    return q.tail == MAX - 1;
+}
+
+void enqueue(Queue &q, int u)
+{
+    if (isFull(q))
+    {
+        cout << "Queue is full!" << endl;
+        return;
+    }
+
+    if (isEmpty(q)) {
+        q.head = 0; // Nếu hàng đợi rỗng, đặt front tại vị trí 0
+    }
+    q.head = (q.tail + 1) % MAX; // Di chuyển rear vòng quanh mảng
+    q.data[q.tail] = u;
+}
+
+int dequeue(Queue &q)
+{
+    if(isEmpty(q)) {
+        cout << "Queue is empty!" << endl;
+        return -1;
+    }
+
+    int x = q.data[q.head];
+    if (q.head == q.tail) {
+        q.head = q.tail = -1;
+    } else {
+        q.head = (q.head + 1) % MAX;
+    }
+    return x;
+}
 
 struct Stack {
     int data[MAX];
@@ -172,6 +225,31 @@ List DFS(Graph g, int u) {
     return result;
 }
 
+List dfsRecursiveHelper(Graph g, int u, List &visited, List &result) {
+    // Mark the node as visited
+    addVisited(visited, u);
+    // Add the node to the result list
+    addList(result, u);
+    // Explore the neighbors
+    List neighborsList = neighbors(g, u);
+    
+    for (int i = 0; i < neighborsList.size; i++) {
+        int v = neighborsList.data[i];
+        if (getVisitedStatus(visited, v) == 0) {  // If the neighbor hasn't been visited
+            dfsRecursiveHelper(g, v, visited, result);  // Recursively explore the neighbor
+        }
+    }
+    return result;
+}
+
+List dfsRecursive(Graph g, int u) {
+    List visited;
+    initVisited(visited, g.vertex);
+    List result;
+    initList(result);
+    return dfsRecursiveHelper(g, u, visited, result);  // Call the helper function
+}
+
 int main() {
     cout << "Hello, World!" << endl;
     Graph g;
@@ -198,6 +276,10 @@ int main() {
     cout << "DFS starting from vertex 0: ";
     List dfsResult = DFS(g, 0);
     printList(dfsResult);
+
+    cout << "DFS starting from vertex 0 by Recursive: ";
+    List dfs = dfsRecursive(g, 0);
+    printList(dfs);
 
     return 0;
 }
