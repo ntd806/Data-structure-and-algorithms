@@ -35,9 +35,9 @@ void enqueue(Queue &q, int u)
 	}
 
 	if (isEmptyQueue(q)) {
-		q.head = 0; // Na:?u hC ng Da;#i ra;ng, Da:7t front ta:!i va; trC- 0
+		q.head = 0;
 	}
-	q.tail = (q.tail + 1) % MAX; // Di chuya;n rear vC2ng quanh ma:#ng
+	q.tail = (q.tail + 1) % MAX;
 	q.data[q.tail] = u;
 }
 
