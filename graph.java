@@ -130,7 +130,7 @@ public class Main {
         void initWeightedGraph() {
             for (int i = 0; i < vertex; i++) {
                 for (int j = 0; j < vertex; j++) {
-                    matrix[i][j] = -1; // Initialize all edges to -1 (no connection)
+                    matrix[i][j] = MAX_VALUE; // Initialize all edges to -1 (no connection)
                 }
             }
         }
@@ -184,9 +184,39 @@ public class Main {
     }
 
     // Dijkstra algorithm
+    // Ý tưởng của thuật toán Dijkstra
+    // Thuật toán Dijkstra là một thuật toán tìm đường đi ngắn nhất từ một đỉnh nguồn đến tất cả các đỉnh khác trong đồ thị có trọng số không âm. Ý tưởng chính của thuật toán là sử dụng một hàng đợi ưu tiên để luôn chọn đỉnh có khoảng cách ngắn nhất hiện tại, sau đó cập nhật khoảng cách đến các đỉnh kề của nó.
+
+    // Giải thích cách hoạt động của code
+    // 1. Khởi tạo
+    // dist: Một mảng lưu trữ khoảng cách ngắn nhất từ đỉnh nguồn đến từng đỉnh khác. Ban đầu, tất cả giá trị đều là MAX_VALUE (vô cực) ngoại trừ đỉnh nguồn có giá trị bằng 0.
+    // visited: Một mảng boolean để đánh dấu các đỉnh đã được xử lý.
+    // pq (Priority Queue - Hàng đợi ưu tiên): Lưu trữ các cặp {đỉnh, khoảng cách} và ưu tiên lấy ra đỉnh có khoảng cách nhỏ nhất.
+    // 2. Chạy vòng lặp chính
+    // Lặp qua hàng đợi ưu tiên:
+    // Lấy ra đỉnh có khoảng cách nhỏ nhất (u).
+    // Nếu đỉnh này đã được thăm rồi, bỏ qua (if (visited[u]) continue;).
+    // Đánh dấu u là đã thăm.
+    // Duyệt qua tất cả các đỉnh v kề với u:
+    // Nếu có đường đi (g.matrix[u][v] != -1) và v chưa thăm (!visited[v]):
+    // Tính khoảng cách mới newDist = dist[u] + g.matrix[u][v].
+    // Nếu newDist nhỏ hơn dist[v], cập nhật dist[v] và thêm {v, dist[v]} vào hàng đợi ưu tiên.
+    // 3. In kết quả
+    // Duyệt qua mảng dist, nếu giá trị bằng MAX_VALUE thì in ra "Vertex X is unreachable", ngược lại in ra khoảng cách tương ứng.
+    // Tóm tắt cách hoạt động
+    // Khởi tạo mảng dist với giá trị vô cực và gán dist[source] = 0.
+    // Dùng hàng đợi ưu tiên để lấy ra đỉnh có khoảng cách nhỏ nhất chưa được xử lý.
+    // Cập nhật khoảng cách ngắn nhất cho các đỉnh kề của đỉnh đang xét.
+    // Lặp lại bước 2 và 3 cho đến khi hàng đợi rỗng.
+    // In ra khoảng cách từ đỉnh nguồn đến tất cả các đỉnh khác.
+    // ⏳ Độ phức tạp: Với cách triển khai bằng hàng đợi ưu tiên (PriorityQueue), thuật toán có độ phức tạp O(V log V + E log V) ≈ O(E log V), trong đó:
+
+    // V là số đỉnh,
+    // E là số cạnh.
+    // ✨ Ưu điểm: Tìm đường đi ngắn nhất hiệu quả cho đồ thị có trọng số dương.
     static void dijkstra(Graph g, int source) {
         int[] dist = new int[g.vertex];
-        Arrays.fill(dist, Integer.MAX_VALUE);
+        Arrays.fill(dist, MAX_VALUE);
         dist[source] = 0;
 
         boolean[] visited = new boolean[g.vertex];
@@ -211,10 +241,28 @@ public class Main {
 
         System.out.println("Shortest distances from vertex " + source + ":");
         for (int i = 0; i < g.vertex; i++) {
-            if (dist[i] == Integer.MAX_VALUE)
+            if (dist[i] == MAX_VALUE)
                 System.out.println("Vertex " + i + " is unreachable");
             else
                 System.out.println("Distance to vertex " + i + " is " + dist[i]);
+        }
+    }
+
+    public void BellmanFord(Graph g, int source){
+        int dist[] = new int[g.vertex];
+        Arrays.fill(dist, MAX_VALUE);
+        dist[source] = 0;
+
+        for (int i = 0; i < g.vertex - 1; i++) {
+            for (int u = 0; u < g.vertex; u++) {
+                for (int v = 0; v < g.vertex; v++) {
+                    if (g.matrix[u][v] != MAX_VALUE) {
+                        if (dist[u] + g.matrix[u][v] < dist[v]) {
+                            dist[v] = dist[u] + g.matrix[u][v];
+                        }
+                    }
+                }
+            }
         }
     }
 
