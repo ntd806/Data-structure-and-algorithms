@@ -2,7 +2,7 @@ import java.util.*;
 
 class Graph {
     static final int MAX = 20;
-    static final int MAX_VALUE = 9999;
+    static final int MAX_VALUE = 9999;  // Represents no connection (infinity)
     int vertex;
     int[][] matrix = new int[MAX][MAX];
 
@@ -10,7 +10,7 @@ class Graph {
     void initGraph() {
         for (int i = 0; i < vertex; i++) {
             for (int j = 0; j < vertex; j++) {
-                matrix[i][j] = 0; // Initialize all edges to 0 (no connection)
+                matrix[i][j] = -1; // -1 indicates no edge
             }
         }
     }
@@ -25,9 +25,11 @@ class Graph {
     }
 
     // Add an edge to the graph
-    void addEdge(int u, int v, int w) {
+    void addEdge(int u, int v, int w, boolean directed) {
         matrix[u][v] = w;
-        matrix[v][u] = w; // Add undirected edge
+        if (!directed) {
+            matrix[v][u] = w; // Add undirected edge
+        }
     }
 
     // Print the graph's adjacency matrix
@@ -35,7 +37,7 @@ class Graph {
         for (int i = 0; i < vertex; i++) {
             for (int j = 0; j < vertex; j++) {
                 if (matrix[i][j] == MAX_VALUE) {
-                    System.out.print("\u221E "); // ∞ symbol for unreachable
+                    System.out.print("\u221E "); // Symbol for unreachable
                 } else {
                     System.out.print(matrix[i][j] + " ");
                 }
@@ -44,26 +46,9 @@ class Graph {
         }
     }
 
-    // Get all neighbors of a given vertex
-    List<Integer> neighbors(int u) {
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < vertex; i++) {
-            if (matrix[u][i] < MAX_VALUE) {
-                list.add(i); // Add neighbors to the list
-            }
-        }
-        return list;
-    }
-
-    // Get the degree of a vertex (number of edges connected to it)
-    int degree(int u) {
-        int deg = 0;
-        for (int i = 0; i < vertex; i++) {
-            if (matrix[u][i] < MAX_VALUE) {
-                deg++;
-            }
-        }
-        return deg;
+    void printGraphData(String graphData) {
+        System.out.println("Graph data:");
+        System.out.println(graphData);
     }
 
     // Read graph data from a string
@@ -76,7 +61,44 @@ class Graph {
             int u = scanner.nextInt();
             int v = scanner.nextInt();
             int w = scanner.nextInt();
-            addEdge(u, v, w);
+            addEdge(u, v, w, true);
+        }
+    }
+
+    void BFS(int start) {
+        boolean[] visited = new boolean[vertex];
+        Queue<Integer> queue = new LinkedList<>();
+        visited[start] = true;
+        queue.add(start);
+
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            System.out.print(u + " ");
+            for (int v = 0; v < vertex; v++) {
+                if (matrix[u][v] != -1 && !visited[v]) {
+                    visited[v] = true;
+                    queue.add(v);
+                }
+            }
+        }
+    }
+
+    void DFS(int start) {
+        boolean[] visited = new boolean[vertex];
+        Stack<Integer> stack = new Stack<>();
+        stack.push(start);
+
+        while (!stack.isEmpty()) {
+            int u = stack.pop();
+            if (!visited[u]) {
+                visited[u] = true;
+                System.out.print(u + " ");
+                for (int v = 0; v < vertex; v++) {
+                    if (matrix[u][v] != -1 && !visited[v]) {
+                        stack.push(v);
+                    }
+                }
+            }
         }
     }
 
@@ -86,9 +108,15 @@ class Graph {
         Arrays.fill(dist, MAX_VALUE);
         dist[source] = 0;
 
+        int[] path = new int[vertex];
+        for (int i = 0; i < vertex; i++) {
+            path[i] = -1;
+        }
+        path[source] = source;
+
         boolean[] visited = new boolean[vertex];
         PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-        pq.add(new int[]{source, 0}); // Start with the source vertex
+        pq.add(new int[] {source, 0}); // Start with the source vertex
 
         while (!pq.isEmpty()) {
             int u = pq.poll()[0];
@@ -100,19 +128,73 @@ class Graph {
                     int newDist = dist[u] + matrix[u][v];
                     if (newDist < dist[v]) {
                         dist[v] = newDist;
-                        pq.add(new int[]{v, dist[v]});
+                        pq.add(new int[] {v, dist[v]});
+                        path[v] = u;
                     }
                 }
             }
         }
 
-        System.out.println("Shortest distances from vertex " + source + ":");
+        System.out.println("Shortest paths from vertex " + source + ":");
         for (int i = 0; i < vertex; i++) {
-            if (dist[i] == MAX_VALUE)
-                System.out.println("Vertex " + i + " is unreachable");
-            else
-                System.out.println("Distance to vertex " + i + " is " + dist[i]);
+            if (dist[i] != MAX_VALUE) {
+                System.out.print("Path to " + i + ": ");
+                printPath(path, i);
+                System.out.println(" with distance: " + dist[i]);
+            }
         }
+    }
+
+    void bellmanFord(int source){
+        int[] dist = new int[vertex];
+        Arrays.fill(dist, MAX_VALUE);
+        dist[source] = 0;
+
+        int[] path = new int[vertex];
+        for (int i = 0; i < vertex; i++) {
+            path[i] = -1;
+        }
+        path[source] = source;
+
+        for (int i = 0; i < vertex - 1; i++){
+            for(int u = 0; u < vertex; u++) {
+                for(int v = 0; v < vertex; v++) {
+                    if(matrix[u][v] != MAX_VALUE){
+                        int newDist = dist[u] + matrix[u][v];
+                        if(newDist < dist[v]){
+                            dist[v] = newDist;
+                            path[v] = u;
+                        }
+                    }
+                }
+            }
+        }
+
+        for(int u = 0; u < vertex; u++) {
+            for(int v = 0; v < vertex; v++) {
+                if(matrix[u][v] != MAX_VALUE){
+                    int newDist = dist[u] + matrix[u][v];
+                    if(newDist < dist[v]){
+                        System.out.println("Graph contains negative cycle");
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    // Helper method to print the path
+    private void printPath(int[] path, int vertex) {
+        if (vertex == -1) {
+            System.out.print("No path"); // If the path is invalid (unreachable)
+            return;
+        }
+        if (path[vertex] == vertex) {
+            System.out.print(vertex + " "); // Base case: if vertex is the source itself
+            return;
+        }
+        printPath(path, path[vertex]); // Recursively print the path
+        System.out.print(vertex + " ");
     }
 }
 
@@ -120,9 +202,13 @@ public class Main {
     public static void main(String[] args) {
         String graphData = "5\n0 1 10\n0 2 20\n1 2 5\n1 3 50\n2 3 10\n3 4 2"; // Example graph input
         Graph g = new Graph();
+        g.printGraphData(graphData);
         g.readWeightedGraphFromString(graphData);
+        g.printGraph();
+        
 
         int source = 0; // Source vertex
-        g.dijkstra(source);
+        g.BFS(source);
+        //g.dijkstra(source);
     }
 }
