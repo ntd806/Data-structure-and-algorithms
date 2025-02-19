@@ -250,7 +250,7 @@ public class Main {
             { 6, 8, 9999, 9999, 9 },
             { 9999, 5, 7, 9, 9999 }
         };
-        Graph g = new Graph(graph, 5);
+        Graph g = new Graph(graph, graph.length);
         // g.printGraphData(graphData);
         // g.readWeightedGraphFromString(graphData);
         // g.printGraph();
