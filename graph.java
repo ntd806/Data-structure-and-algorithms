@@ -6,6 +6,11 @@ class Graph {
     int vertex;
     int[][] matrix = new int[MAX][MAX];
 
+    Graph(int[][] matrix, int vertex) {
+        this.vertex = vertex;
+        this.matrix = matrix;
+    }
+
     // Initialize a graph with no connections
     void initGraph() {
         for (int i = 0; i < vertex; i++) {
@@ -61,7 +66,7 @@ class Graph {
             int u = scanner.nextInt();
             int v = scanner.nextInt();
             int w = scanner.nextInt();
-            addEdge(u, v, w, true);
+            addEdge(u, v, w, false);
         }
     }
 
@@ -196,19 +201,64 @@ class Graph {
         printPath(path, path[vertex]); // Recursively print the path
         System.out.print(vertex + " ");
     }
+
+    void printMST(int parent[], int graph[][])
+    {
+        System.out.println("Edge \tWeight");
+        for (int i = 1; i < vertex; i++)
+            System.out.println(parent[i] + " - " + i + "\t"
+                               + graph[parent[i]][i]);
+    }
+
+    void prim(int source) {
+        int parent[] = new int [vertex];
+        int key[] = new int [vertex];
+        Arrays.fill(key, MAX_VALUE);
+        key[source] = 0;
+        parent[source] = -1;
+        boolean[] mstSet = new boolean[vertex];
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        pq.add(new int[] {source, 0});
+        
+        while(!pq.isEmpty()) {
+            int u = pq.poll()[0];
+            mstSet[u] = true;
+
+            for(int v = 0; v < vertex; v++){
+                int weight = matrix[u][v];
+
+                if(weight != MAX_VALUE && !mstSet[v] && weight < key[v]){
+                    key[v] = weight;
+                    parent[v] = u;
+                    pq.add(new int[] {v, key[v]});
+                }
+            }
+        }
+
+        printMST(parent, matrix);
+    }
 }
 
 public class Main {
     public static void main(String[] args) {
-        String graphData = "5\n0 1 10\n0 2 20\n1 2 5\n1 3 50\n2 3 10\n3 4 2"; // Example graph input
-        Graph g = new Graph();
-        g.printGraphData(graphData);
-        g.readWeightedGraphFromString(graphData);
-        g.printGraph();
+        // String graphData = "5\n0 1 10\n0 2 20\n1 2 5\n1 3 50\n2 3 10\n3 4 2"; // Example graph input
+        int graph[][] = {
+            { 9999, 2, 9999, 6, 9999 },
+            { 2, 9999, 3, 8, 5 },
+            { 9999, 3, 9999, 9999, 7 },
+            { 6, 8, 9999, 9999, 9 },
+            { 9999, 5, 7, 9, 9999 }
+        };
+        Graph g = new Graph(graph, 5);
+        // g.printGraphData(graphData);
+        // g.readWeightedGraphFromString(graphData);
+        // g.printGraph();
         
 
         int source = 0; // Source vertex
-        g.BFS(source);
+        //g.BFS(source);
+        g.prim(source);
         //g.dijkstra(source);
     }
 }
