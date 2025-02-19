@@ -1,5 +1,42 @@
 import java.util.*;
 
+class UnionFind {
+    int parent[];
+    int rank[];
+
+    UnionFind(int n) {
+        parent = new int[n];
+        rank = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            rank[i] = 0;
+        }
+    }
+
+    int find(int u) {
+        if (parent[u] == u) {
+            return u;
+        }
+        return parent[u] = find(parent[u]);
+    }
+
+    void union(int u, int v) {
+        int pu = find(u);
+        int pv = find(v);
+        if (pu == pv) {
+            return;
+        }
+        if (rank[pu] < rank[pv]) {
+            parent[pu] = pv;
+        } else if (rank[pu] > rank[pv]) {
+            parent[pv] = pu;
+        } else {
+            parent[pu] = pv;
+            rank[pv]++;
+        }
+    }
+}
+
 class Graph {
     static final int MAX = 20;
     static final int MAX_VALUE = 9999;  // Represents no connection (infinity)
