@@ -305,8 +305,7 @@ class Graph {
     }
 
     // In các cạnh ra màn hình
-    void prinEgde() {
-        List<int[]> edges = getEgde();
+    void prinEgde(List<int[]> edges) {
         for (int[] edge : edges) {
             System.out.println(edge[0] + " " + edge[1] + " " + edge[2]);
         }
@@ -346,8 +345,6 @@ public class Main {
 		};
 		Graph g = new Graph(graph, graph.length);
 		g.printGraph();
-		g.prinEgde();
-        g.kruskal();
-        g.prim(0);
+		g.prinEgde(g.getEgde());
 	}
 }
