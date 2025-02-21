@@ -52,7 +52,7 @@ class Graph {
 	void initGraph() {
 		for (int i = 0; i < vertex; i++) {
 			for (int j = 0; j < vertex; j++) {
-				matrix[i][j] = -1; // -1 indicates no edge
+				matrix[i][j] = MAX_VALUE; // -1 indicates no edge
 			}
 		}
 	}
@@ -117,7 +117,7 @@ class Graph {
 			int u = queue.poll();
 			System.out.print(u + " ");
 			for (int v = 0; v < vertex; v++) {
-				if (matrix[u][v] != -1 && !visited[v]) {
+				if (matrix[u][v] != MAX_VALUE && !visited[v]) {
 					visited[v] = true;
 					queue.add(v);
 				}
@@ -136,7 +136,7 @@ class Graph {
 				visited[u] = true;
 				System.out.print(u + " ");
 				for (int v = 0; v < vertex; v++) {
-					if (matrix[u][v] != -1 && !visited[v]) {
+					if (matrix[u][v] != MAX_VALUE && !visited[v]) {
 						stack.push(v);
 					}
 				}
@@ -332,6 +332,65 @@ class Graph {
             System.out.println(edge[0] + " " + edge[1] + " " + edge[2]);
         }
     }
+
+	// Topological Sorting by Kahn's algorithm
+	// Topological Sorting (sắp xếp topo) là một kỹ thuật sắp xếp các đỉnh của đồ thị có hướng sao cho với mỗi cạnh có hướng 𝑢→𝑣
+	// đỉnh 𝑢 sẽ xuất hiện trước đỉnh 𝑣 rong thứ tự sắp xếp. Đây là một công cụ quan trọng để xử lý các bài toán phụ thuộc thứ tự, chẳng hạn như:
+	// Quản lý lịch trình công việc: Sắp xếp các tác vụ theo thứ tự mà một số tác vụ phải được hoàn thành trước tác vụ khác.
+	// Biên dịch mã nguồn: Xác định thứ tự biên dịch các module có phụ thuộc lẫn nhau.
+	// Giải quyết bài toán phụ thuộc học phần: Xác định thứ tự học các môn học sao cho các môn yêu cầu tiên quyết được học trước.
+	void topologicalKahn() {
+		// Bước 1: Tính độ vào (in-degree) của mỗi đỉnh trong đồ thị, tức số lượng cạnh hướng vào mỗi đỉnh.
+		int indegree[] = new int[vertex];
+		for(int i = 0; i < vertex; i++) {
+			for(int j = 0; j < vertex; j++) {
+				if(matrix[i][j] != MAX_VALUE) {
+					indegree[j]++;
+				}
+			}
+		}
+		// Bước 2: Tìm tất cả các đỉnh có độ vào bằng 0 (không có đỉnh nào trỏ đến chúng). Đây là những đỉnh có thể được xếp đầu tiên.
+		Queue<Integer> queue = new LinkedList<>();
+		for(int i = 0; i < vertex; i++) {
+			if(indegree[i] == 0) {
+				queue.add(i);
+			}
+		}
+
+		// Bước 3: Thêm các đỉnh này vào một hàng đợi (queue) và vào danh sách kết quả.
+		int count = 0;
+		List<Integer> topOrder = new ArrayList<>();
+		while(!queue.isEmpty()) {
+			int u = queue.poll();
+			topOrder.add(u);
+
+			// Bước 4: Trong khi hàng đợi không rỗng, thực hiện:
+			// Lấy một đỉnh ra khỏi hàng đợi.
+			// Giảm độ vào của tất cả các đỉnh kề với đỉnh vừa lấy ra.
+			// Nếu sau khi giảm, một đỉnh nào đó có độ vào bằng 0, thêm đỉnh đó vào hàng đợi.
+			for(int v = 0; v < vertex; v++) {
+				if(matrix[u][v] != MAX_VALUE) {
+					if(--indegree[v] == 0) {
+						queue.add(v);
+					}
+				}
+			}
+			count++;
+		}
+
+		// Bước 5: Quá trình kết thúc khi hàng đợi rỗng.
+		// Nếu danh sách kết quả chứa tất cả các đỉnh của đồ thị, ta đã có thứ tự topo hợp lệ;
+		// nếu không, đồ thị chứa chu trình và không thể sắp xếp topo.
+		if(count != vertex) {
+			System.out.println("There exists a cycle in the graph");
+			return;
+		}
+
+		System.out.println("Topological order:");
+		for(int i : topOrder) {
+			System.out.print(i + " ");
+		}
+	}
 }
 
 public class Main {
