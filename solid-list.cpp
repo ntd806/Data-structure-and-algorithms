@@ -1,5 +1,7 @@
 #include <iostream>
 #define MAX 1000
+#include <vector>
+#include <algorithm> // for sort
 using namespace std;
 
 struct SolidList {
@@ -292,7 +294,43 @@ void quickSort(int a[], int left, int right) {
     if (left < r) quickSort(a, left, r); 
     if (l < right) quickSort(a, l, right); 
 }
-// heap sort
+
+// Thuật toán bucket sort
+int getFirstDigit(int number) {
+    while (number >= 10) {
+        number /= 10; // Chia số cho 10 liên tục cho đến khi còn 1 chữ số
+    }
+    return number; // Trả về chữ số đầu tiên
+}
+
+// Bucket Sort là một thuật toán sắp xếp dựa trên phân phối của các phần tử vào các "bucket" (thùng chứa) rồi sắp xếp từng bucket riêng biệt.
+// Cách hoạt động:
+//     Chia khoảng giá trị của mảng thành các bucket.
+//     Đặt mỗi phần tử vào bucket tương ứng.
+//     Sắp xếp từng bucket (nếu cần).
+//     Kết hợp các bucket lại thành một mảng đã sắp xếp.
+void bucketSort(int a[], int n) {
+    vector<int> bucket[10]; // Mảng 10 bucket
+
+    for(int i = 0; i < n; i++) {
+        int index = getFirstDigit(a[i]); // Lấy chữ số đầu tiên của phần tử
+        bucket[index].push_back(a[i]); // Thêm phần tử vào bucket tương ứng
+    }
+
+    for(int i = 0; i < 10; i++) {
+        if(bucket[i].size() > 1) {
+            // Sắp xếp bucket nếu có nhiều hơn 1 phần tử
+            sort(bucket[i].begin(), bucket[i].end());
+        }
+    }
+
+    int index = 0;
+    for(int i = 0; i < 10; i++) {
+        for(int j = 0; j < bucket[i].size(); j++) {
+            a[index++] = bucket[i][j]; // Gán các phần tử từ bucket vào mảng
+        }
+    }
+}
 
 int main() {
     SolidList solidList;
