@@ -6,11 +6,9 @@ thay vì sử dụng vòng lặp lồng nhau (nested loop), từ đó giúp gi�
 - Khởi tạo: Đặt hai con trỏ ở hai đầu của mảng (thường là left = 0 và right = n - 1 với mảng dài n).  
 - Duyệt: Di chuyển một hoặc cả hai con trỏ dựa trên một điều kiện cụ thể cho đến khi gặp nhau hoặc thỏa mãn yêu cầu bài toán.  
 
-
-
  📌 Ví dụ điển hình: Tìm hai số có tổng bằng X
-
-Đề bài: Cho một mảng số nguyên đã được sắp xếp theo thứ tự tăng dần và một số nguyên X. Kiểm tra xem có tồn tại một cặp phần tử nào có tổng bằng X hay không.
+Đề bài: Cho một mảng số nguyên đã được sắp xếp theo thứ tự tăng dần và một số nguyên X. 
+Kiểm tra xem có tồn tại một cặp phần tử nào có tổng bằng X hay không.
 
 Ý tưởng giải quyết:  
 1. Khởi tạo hai con trỏ:
