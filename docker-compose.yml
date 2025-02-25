@@ -1,8 +1,0 @@
-version: '3.8'
-services:
-  cpp_app:
-    build:
-      context: .
-    volumes:
-      - .:/app  # Đồng bộ thư mục hiện tại với thư mục /app trong container
-    command: bash -c "g++ -o main main.cpp && ./main"  # Biên dịch và chạy lại chương trình
