@@ -31,12 +31,12 @@ echo "Tên: $name";
 
  🔍 3. Sự khác biệt giữa char và string:
 
-| Tính năng      | char                         | string                           |
-|----------------|--------------------------------|------------------------------------|
-| Lưu trữ         | 1 ký tự duy nhất              | Nhiều ký tự (chuỗi)                |
-| Kích thước      | 1 byte                        | Tùy thuộc vào độ dài chuỗi         |
-| Ký tự kết thúc  | Không có                      | Ký tự kết thúc \0 (C)            |
-| Ví dụ           | 'A'                         | "Hello"                          |
+| Tính năng       | char                           | string                             |
+|---------------- |--------------------------------|------------------------------------|
+| Lưu trữ         | 1 ký tự duy nhất               | Nhiều ký tự (chuỗi)                |
+| Kích thước      | 1 byte                         | Tùy thuộc vào độ dài chuỗi         |
+| Ký tự kết thúc  | Không có                       | Ký tự kết thúc \0 (C)              |
+| Ví dụ           | 'A'                            | "Hello"                            |
 
  🔗 4. Khi nào nên dùng?
 - Dùng char khi chỉ cần lưu trữ một ký tự duy nhất (ví dụ: kiểm tra chữ cái đầu tiên của từ).
