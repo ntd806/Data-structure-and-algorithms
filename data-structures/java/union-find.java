@@ -1,3 +1,31 @@
+// Union-Find (Disjoint Set Union - DSU)
+// 1. Cách hoạt động:
+
+// Union-Find là một cấu trúc dữ liệu được sử dụng để quản lý một tập hợp các phần tử được chia thành các tập con không giao nhau.
+// Nó hỗ trợ hai thao tác chính:
+
+// Find(x): Tìm đại diện (root) của tập hợp chứa phần tử x.
+// → Sử dụng kỹ thuật path compression để tối ưu, giúp rút ngắn đường đi từ một nút đến gốc.
+
+// Union(x, y): Hợp nhất hai tập hợp chứa x và y thành một tập hợp duy nhất.
+// → Thường sử dụng union by rank hoặc union by size để giữ cho cây cân bằng, giúp tối ưu hiệu suất.
+
+// Tối ưu hiệu suất:
+
+// Với hai kỹ thuật trên, thời gian thực hiện mỗi thao tác gần như là O(α(n)) (gần như hằng số),
+// với α(n) là hàm đảo của hàm Ackermann – một hàm tăng cực chậm.
+// 2. Ứng dụng:
+
+// Kiểm tra chu trình trong đồ thị: Dùng để phát hiện chu trình trong đồ thị vô hướng khi thêm cạnh.
+
+// Xác định thành phần liên thông: Giúp kiểm tra xem hai đỉnh thuộc cùng một thành phần liên thông hay không.
+
+// Thuật toán Kruskal: Tìm cây khung nhỏ nhất (Minimum Spanning Tree - MST) trong đồ thị.
+
+// Phân cụm (Clustering): Xác định các nhóm phần tử liên quan trong dữ liệu.
+
+// Vấn đề mạng xã hội: Kiểm tra xem hai người dùng có kết nối trực tiếp hoặc gián tiếp với nhau không.
+
 import java.util.Arrays;
 
 public class UnionFind {

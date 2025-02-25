@@ -1,3 +1,31 @@
+// Union-Find (Disjoint Set Union - DSU)
+// 1. Cách hoạt động:
+
+// Union-Find là một cấu trúc dữ liệu được sử dụng để quản lý một tập hợp các phần tử được chia thành các tập con không giao nhau.
+// Nó hỗ trợ hai thao tác chính:
+
+// Find(x): Tìm đại diện (root) của tập hợp chứa phần tử x.
+// → Sử dụng kỹ thuật path compression để tối ưu, giúp rút ngắn đường đi từ một nút đến gốc.
+
+// Union(x, y): Hợp nhất hai tập hợp chứa x và y thành một tập hợp duy nhất.
+// → Thường sử dụng union by rank hoặc union by size để giữ cho cây cân bằng, giúp tối ưu hiệu suất.
+
+// Tối ưu hiệu suất:
+
+// Với hai kỹ thuật trên, thời gian thực hiện mỗi thao tác gần như là O(α(n)) (gần như hằng số),
+// với α(n) là hàm đảo của hàm Ackermann – một hàm tăng cực chậm.
+// 2. Ứng dụng:
+
+// Kiểm tra chu trình trong đồ thị: Dùng để phát hiện chu trình trong đồ thị vô hướng khi thêm cạnh.
+
+// Xác định thành phần liên thông: Giúp kiểm tra xem hai đỉnh thuộc cùng một thành phần liên thông hay không.
+
+// Thuật toán Kruskal: Tìm cây khung nhỏ nhất (Minimum Spanning Tree - MST) trong đồ thị.
+
+// Phân cụm (Clustering): Xác định các nhóm phần tử liên quan trong dữ liệu.
+
+// Vấn đề mạng xã hội: Kiểm tra xem hai người dùng có kết nối trực tiếp hoặc gián tiếp với nhau không.
+
 import java.util.*;
 
 class UnionFind {
@@ -36,6 +64,75 @@ class UnionFind {
 		}
 	}
 }
+
+// 1. Ứng dụng của đồ thị (Graph Applications)
+// Đồ thị là một cấu trúc dữ liệu mạnh mẽ và được sử dụng rộng rãi trong nhiều lĩnh vực khác nhau:
+
+// Mạng máy tính (Computer Networks): Mô hình hóa mạng Internet, nơi các máy tính là đỉnh (vertex) và kết nối giữa chúng là cạnh (edge).
+
+// Hệ thống giao thông (Traffic Networks): Đại diện cho các nút giao thông (đỉnh) và các con đường (cạnh) để tìm đường đi ngắn nhất hoặc phát hiện ùn tắc.
+
+// Mạng xã hội (Social Networks): Mô hình hóa các mối quan hệ giữa người dùng, như bạn bè trên Facebook hoặc người theo dõi trên Twitter.
+
+// Công cụ tìm kiếm (Search Engines): Thuật toán PageRank của Google sử dụng đồ thị để xếp hạng các trang web dựa trên liên kết giữa chúng.
+
+// Tối ưu hóa dòng chảy (Flow Optimization): Giải quyết các bài toán như luồng cực đại (Maximum Flow) trong logistics hoặc quản lý tài nguyên.
+
+// Lập lịch (Scheduling): Dùng trong việc lên lịch công việc hoặc tổ chức sự kiện, như sơ đồ Gantt hoặc đồ thị phụ thuộc công việc.
+
+// 2. Các thuật toán cơ bản trong đồ thị (Basic Graph Algorithms)
+// Thuật toán tìm kiếm (Traversal Algorithms):
+// DFS (Depth-First Search - Tìm kiếm theo chiều sâu):
+// Duyệt các đỉnh theo chiều sâu trước khi quay lại nhánh khác.
+// Ứng dụng: Kiểm tra tính liên thông, phát hiện chu trình trong đồ thị.
+
+// BFS (Breadth-First Search - Tìm kiếm theo chiều rộng):
+// Duyệt các đỉnh theo từng lớp, từ gần đến xa.
+// Ứng dụng: Tìm đường đi ngắn nhất trong đồ thị vô hướng không trọng số.
+
+// Thuật toán tìm đường đi ngắn nhất (Shortest Path Algorithms):
+// Dijkstra:
+// Tìm đường đi ngắn nhất từ một đỉnh đến tất cả các đỉnh khác trong đồ thị có trọng số không âm.
+
+// Bellman-Ford:
+// Xử lý được cả trọng số âm, nhưng chậm hơn Dijkstra.
+
+// Floyd-Warshall:
+// Tìm đường đi ngắn nhất giữa tất cả các cặp đỉnh trong đồ thị (sử dụng lập trình động).
+
+// Thuật toán tìm cây khung nhỏ nhất (Minimum Spanning Tree - MST):
+// Kruskal:
+// Sắp xếp cạnh theo trọng số và thêm vào cây nếu không tạo chu trình.
+
+// Prim:
+// Mở rộng cây từ một đỉnh bằng cách thêm các cạnh nhỏ nhất kết nối với cây hiện tại.
+
+// Thuật toán luồng cực đại (Maximum Flow):
+// Ford-Fulkerson:
+// Tìm luồng cực đại từ nguồn đến đích bằng cách tăng dần luồng theo các đường tăng cường.
+
+// Edmonds-Karp:
+// Là cải tiến của Ford-Fulkerson, sử dụng BFS để tìm đường tăng cường ngắn nhất.
+
+// Các thuật toán phát hiện chu trình (Cycle Detection):
+// Union-Find:
+// Kiểm tra xem có chu trình trong đồ thị hay không, chủ yếu áp dụng cho đồ thị vô hướng.
+
+// DFS:
+// Dùng trong đồ thị có hướng để phát hiện chu trình dựa trên việc đánh dấu đỉnh.
+
+// Thuật toán tô màu đồ thị (Graph Coloring):
+// Gán màu cho các đỉnh sao cho không có hai đỉnh kề nhau cùng màu.
+// Ứng dụng: Lập lịch thi, phân bổ tần số vô tuyến.
+
+// 3. Phân loại đồ thị (Graph Types):
+// Đồ thị vô hướng (Undirected Graph): Cạnh không có hướng, ví dụ: mạng xã hội.
+// Đồ thị có hướng (Directed Graph - DAG): Cạnh có hướng, ví dụ: đồ thị phụ thuộc công việc.
+// Đồ thị có trọng số (Weighted Graph): Các cạnh mang trọng số, ví dụ: bản đồ giao thông với độ dài quãng đường.
+// Đồ thị đầy đủ (Complete Graph): Mỗi cặp đỉnh đều được nối với nhau.
+// Đồ thị không chu trình (Acyclic Graph): Không chứa chu trình, ví dụ: cây, DAG.
+// Đồ thị liên thông (Connected Graph): Mỗi đỉnh đều kết nối với ít nhất một đỉnh khác.
+// Đồ thị không liên thông (Disconnected Graph): Có ít nhất một đỉnh không kết nối với đỉnh nào khác.
 
 class Graph {
 	static final int MAX = 20;
