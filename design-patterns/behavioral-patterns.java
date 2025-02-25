@@ -18,21 +18,17 @@
 // | Template Method               | Xác định cấu trúc thuật toán chung                             | Các thao tác theo khuôn mẫu (template)                       |
 // +-------------------------------+----------------------------------------------------------------+--------------------------------------------------------------+
 
-1. Observer Pattern
-Giải thích:
-Tạo mối quan hệ giữa các đối tượng, khi một đối tượng thay đổi trạng thái thì tất cả các đối tượng phụ thuộc sẽ được thông báo tự động.
+// 1. Observer Pattern
+// Giải thích:
+// Tạo mối quan hệ giữa các đối tượng, khi một đối tượng thay đổi trạng thái thì tất cả các đối tượng phụ thuộc sẽ được thông báo tự động.
 
-Ứng dụng:
+// Ứng dụng:
 
-Hệ thống thông báo (Notification system).
-Event handling trong GUI.
-Ví dụ:
+// Hệ thống thông báo (Notification system).
+// Event handling trong GUI.
+// Ví dụ:
 
-java
-Copy
-Edit
 import java.util.*;
-
 // Subject
 class Subject {
     private List<Observer> observers = new ArrayList<>();
@@ -86,19 +82,17 @@ public class Main {
         subject.setState(20);
     }
 }
-2. Strategy Pattern
-Giải thích:
-Cho phép thay đổi thuật toán hoặc hành vi của một đối tượng tại runtime mà không thay đổi mã nguồn của nó.
 
-Ứng dụng:
+// 2. Strategy Pattern
+// Giải thích:
+// Cho phép thay đổi thuật toán hoặc hành vi của một đối tượng tại runtime mà không thay đổi mã nguồn của nó.
 
-Hệ thống thanh toán (PayPal, Credit Card, etc.).
-Trò chơi có nhiều chiến thuật khác nhau.
-Ví dụ:
+// Ứng dụng:
 
-java
-Copy
-Edit
+// Hệ thống thanh toán (PayPal, Credit Card, etc.).
+// Trò chơi có nhiều chiến thuật khác nhau.
+// Ví dụ:
+
 // Strategy Interface
 interface PaymentStrategy {
     void pay(int amount);
@@ -142,19 +136,17 @@ public class Main {
         cart.checkout(200);
     }
 }
-3. Command Pattern
-Giải thích:
-Biến các yêu cầu thành các đối tượng, từ đó dễ dàng lưu trữ, truyền đạt và thực thi lệnh.
 
-Ứng dụng:
+// 3. Command Pattern
+// Giải thích:
+// Biến các yêu cầu thành các đối tượng, từ đó dễ dàng lưu trữ, truyền đạt và thực thi lệnh.
 
-Hệ thống Undo/Redo.
-Remote Control Systems.
-Ví dụ:
+// Ứng dụng:
 
-java
-Copy
-Edit
+// Hệ thống Undo/Redo.
+// Remote Control Systems.
+// Ví dụ:
+
 // Command Interface
 interface Command {
     void execute();
@@ -224,19 +216,17 @@ public class Main {
         remote.pressButton();
     }
 }
-4. Chain of Responsibility Pattern
-Giải thích:
-Chuyển yêu cầu dọc theo một chuỗi các đối tượng xử lý cho đến khi được xử lý.
 
-Ứng dụng:
+// 4. Chain of Responsibility Pattern
+// Giải thích:
+// Chuyển yêu cầu dọc theo một chuỗi các đối tượng xử lý cho đến khi được xử lý.
 
-Xử lý lỗi theo chuỗi.
-Hệ thống xử lý yêu cầu trong ứng dụng web.
-Ví dụ:
+// Ứng dụng:
 
-java
-Copy
-Edit
+// Xử lý lỗi theo chuỗi.
+// Hệ thống xử lý yêu cầu trong ứng dụng web.
+// Ví dụ:
+
 // Handler
 abstract class Logger {
     public static int INFO = 1;
@@ -298,21 +288,18 @@ public class Main {
         loggerChain.logMessage(Logger.ERROR, "This is an error message.");
     }
 }
-5. Mediator Pattern
-Giải thích:
-Tạo một đối tượng trung gian để giảm sự phụ thuộc giữa các đối tượng khác nhau.
 
-Ứng dụng:
+// 5. Mediator Pattern
+// Giải thích:
+// Tạo một đối tượng trung gian để giảm sự phụ thuộc giữa các đối tượng khác nhau.
 
-Chat Room.
-Hệ thống giao tiếp phức tạp.
-Ví dụ:
+// Ứng dụng:
 
-java
-Copy
-Edit
+// Chat Room.
+// Hệ thống giao tiếp phức tạp.
+// Ví dụ:
+
 import java.util.*;
-
 // Mediator Interface
 interface ChatMediator {
     void sendMessage(String message, User user);
@@ -382,19 +369,16 @@ public class Main {
     }
 }
 
-6. State Pattern
-Giải thích:
-Cho phép một đối tượng thay đổi hành vi khi trạng thái nội bộ của nó thay đổi.
+// 6. State Pattern
+// Giải thích:
+// Cho phép một đối tượng thay đổi hành vi khi trạng thái nội bộ của nó thay đổi.
 
-Ứng dụng:
+// Ứng dụng:
 
-Máy bán hàng tự động (vending machine).
-Quản lý trạng thái trò chơi (chơi, tạm dừng, kết thúc).
-Ví dụ:
+// Máy bán hàng tự động (vending machine).
+// Quản lý trạng thái trò chơi (chơi, tạm dừng, kết thúc).
+// Ví dụ:
 
-java
-Copy
-Edit
 // State interface
 interface State {
     void doAction(Context context);
@@ -454,19 +438,17 @@ public class Main {
         System.out.println(context.getState());
     }
 }
-7. Visitor Pattern
-Giải thích:
-Cho phép thêm các thao tác mới vào một đối tượng mà không thay đổi lớp của nó.
 
-Ứng dụng:
+// 7. Visitor Pattern
+// Giải thích:
+// Cho phép thêm các thao tác mới vào một đối tượng mà không thay đổi lớp của nó.
 
-Trình biên dịch (compiler).
-Xử lý dữ liệu trên cấu trúc phức tạp như cây hoặc đồ thị.
-Ví dụ:
+// Ứng dụng:
 
-java
-Copy
-Edit
+// Trình biên dịch (compiler).
+// Xử lý dữ liệu trên cấu trúc phức tạp như cây hoặc đồ thị.
+// Ví dụ:
+
 // Visitor interface
 interface Visitor {
     void visit(Book book);
@@ -554,19 +536,17 @@ public class Main {
         }
     }
 }
-8. Template Method Pattern
-Giải thích:
-Xác định một khung của một thuật toán trong phương thức, cho phép các lớp con định nghĩa lại một số bước mà không thay đổi cấu trúc của thuật toán.
 
-Ứng dụng:
+// 8. Template Method Pattern
+// Giải thích:
+// Xác định một khung của một thuật toán trong phương thức, cho phép các lớp con định nghĩa lại một số bước mà không thay đổi cấu trúc của thuật toán.
 
-Tạo template cho các thao tác có cấu trúc giống nhau.
-Hệ thống xử lý giao dịch (transaction processing).
-Ví dụ:
+// Ứng dụng:
 
-java
-Copy
-Edit
+// Tạo template cho các thao tác có cấu trúc giống nhau.
+// Hệ thống xử lý giao dịch (transaction processing).
+// Ví dụ:
+
 // Abstract Class
 abstract class Game {
     abstract void initialize();
