@@ -17,17 +17,60 @@ using namespace std;
 //         Xảy ra khi một nút được thêm vào cây con trái của cây con trái của một nút.
 //         Cách xử lý: Thực hiện một phép quay phải (Right Rotation) tại nút mất cân bằng.
 
+    // Trước khi quay:
+    //         30
+    //        /
+    //      20
+    //     /
+    //   10
+    // Sau khi quay phải:
+    //      20
+    //     /  \
+    //   10    30
+
 //     Trường hợp Right-Right (RR):
 //         Xảy ra khi một nút được thêm vào cây con phải của cây con phải của một nút.
 //         Cách xử lý: Thực hiện một phép quay trái (Left Rotation) tại nút mất cân bằng.
+    // Trước khi quay:
+    //      10
+    //        \
+    //         20
+    //           \
+    //            30
+    // Sau khi quay trái:
+    //      20
+    //     /  \
+    //   10    30
 
 //     Trường hợp Left-Right (LR):
 //         Xảy ra khi một nút được thêm vào cây con phải của cây con trái của một nút.
 //         Cách xử lý: Thực hiện quay trái tại cây con trái, sau đó quay phải tại nút mất cân bằng.
+    // Trước khi quay:
+    //         30
+    //        /
+    //      10
+    //        \
+    //         20
+    // Sau khi quay trái tại cây con trái và quay phải tại nút mất cân bằng:
+    //      20
+    //     /  \
+    //   10    30
+
 
 //     Trường hợp Right-Left (RL):
 //         Xảy ra khi một nút được thêm vào cây con trái của cây con phải của một nút.
 //         Cách xử lý: Thực hiện quay phải tại cây con phải, sau đó quay trái tại nút mất cân bằng.
+    // Trước khi quay:
+    //      10
+    //        \
+    //         30
+    //        /
+    //      20
+    // Sau khi quay phải tại cây con phải và quay trái tại nút mất cân bằng:
+    //      20
+    //     /  \
+    //   10    30
+
 
 // phần định nghĩa cấu trúc cây AVL
 struct Node {
