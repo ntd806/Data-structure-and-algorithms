@@ -304,7 +304,7 @@ int getFirstDigit(int number) {
 }
 
 // Bucket Sort là một thuật toán sắp xếp dựa trên phân phối của các phần tử vào các "bucket" (thùng chứa) rồi sắp xếp từng bucket riêng biệt.
-// Cách hoạt động:
+//     Cách hoạt động:
 //     Chia khoảng giá trị của mảng thành các bucket.
 //     Đặt mỗi phần tử vào bucket tương ứng.
 //     Sắp xếp từng bucket (nếu cần).
