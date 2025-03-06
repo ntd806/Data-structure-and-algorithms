@@ -18,10 +18,10 @@
 // Giải quyết các bài toán liên quan đến nhị phân hoặc kiểm tra tính chất của số.
 // 🔍 Các phép toán cơ bản:
 // Phép toán   | Ký hiệu	 |  Ý nghĩa
-// AND	       |   &	     |   Bit = 1 nếu cả hai bit đều là 1
-// OR	       |   | 	     |   Bit = 1 nếu một trong hai bit là 1
-// XOR         |   ^	     |   Bit = 1 nếu hai bit khác nhau
-// NOT		   |   ~         |   Đảo ngược bit (0 thành 1, 1 thành 0)
+// AND	       |   &	     |   Bit kết quả = 1 nếu và chỉ nếu cả hai bit tương ứng trong a và b đều là 1
+// OR	       |   | 	     |   Bit kết quả = 1 nếu ít nhất một trong hai bit tương ứng trong a và b là 1.
+// XOR         |   ^	     |   Bit kết quả = 1 nếu hai bit tương ứng trong a và b khác nhau còn lại là 0.
+// NOT		   |   ~         |   Phép toán NOT đảo ngược tất cả các bit của một số. Nếu bit là 1, nó sẽ trở thành 0 và ngược lại.
 // Shift Left  |   <<	     |   Dịch bit sang trái (nhân 2)
 // Shift Right |   >>	     |   Dịch bit sang phải (chia 2)
 
@@ -44,10 +44,9 @@
 // Sau khi dịch trái 2 bit: 00101000 (40)
 // Vậy, số 10 sau khi dịch trái 2 bit sẽ thành số 40.
 // Thao tác Shift Right (Dịch phải) làm ngược lại sang bên phải một hoặc nhiều vị trí. Các bit mới bên trái sẽ được điền bằng 0.
-// Tóm tắt:
-// Mỗi lần dịch trái 1 bit, giá trị của số sẽ nhân đôi.
-// Sau khi dịch, các bit mới sẽ được điền 0 từ phía phải.
-
+// Ví dụ 1: Dịch phải 2 bit với số không dấu 10 (00001010)
+// 00001010 >> 2 = 00000010
+    
 // 📌 Ví dụ 1: Kiểm tra số chẵn hay lẻ
 public class BitwiseExample {
     public static boolean isOdd(int n) {
